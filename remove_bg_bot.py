@@ -90,6 +90,18 @@ def main() -> None:
 if __name__ == '__main__':
     main()
 
+from flask import Flask
 import os
-PORT = os.getenv('PORT', 10000)
-app.run(host='0.0.0.0', port=PORT)
+
+app = Flask(__name__)
+
+# Define a simple route for testing
+@app.route('/')
+def home():
+    return "This is a web service running on Render!"
+
+if __name__ == "__main__":
+    # Render assigns a PORT environment variable for web services
+    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port)
+
