@@ -1,0 +1,6 @@
+services:
+  - type: worker
+    name: telegram-bot-worker
+    env: python
+    buildCommand: "pip install python-telegram-bot requests"
+    startCommand: "python remove_bg_bot.py"  # Assuming your bot script is called bot.py
