@@ -3,6 +3,7 @@ import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 from flask import Flask, render_template
+from threading import Thread
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='flask_app/static', template_folder='flask_app/templates')
@@ -78,7 +79,7 @@ async def handle_image(update: Update, context: CallbackContext) -> None:
 async def error(update: Update, context: CallbackContext) -> None:
     logger.warning(f"Update {update} caused error {context.error}")
 
-def main() -> None:
+def run_bot() -> None:
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(TELEGRAM_TOKEN).build()
 
@@ -95,12 +96,16 @@ def main() -> None:
     # Start the Bot
     application.run_polling()
 
-if __name__ == '__main__':
-    main()
-
 # Function to run the Flask app
 def run_flask():
     app.run(host='0.0.0.0', port=4000)
 
 if __name__ == '__main__':
-    run_flask()
+    # Run Flask app in a separate thread
+    flask_thread = Thread(target=run_flask)
+    flask_thread.start()
+
+    # Run the Telegram bot
+    run_bot()
+
+    
