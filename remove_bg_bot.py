@@ -2,7 +2,6 @@ import requests
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
-
 from flask import Flask, render_template
 
 # Initialize Flask app
@@ -11,13 +10,6 @@ app = Flask(__name__, static_folder='flask_app/static', template_folder='flask_a
 @app.route('/')
 def index():
     return render_template('index.html')
-
-# Function to run the Flask app
-def run_flask():
-    app.run(host='0.0.0.0', port=4000)
-
-if __name__ == '__main__':
-    run_flask()
 
 # Set up logging
 logging.basicConfig(
@@ -106,18 +98,9 @@ def main() -> None:
 if __name__ == '__main__':
     main()
 
-from flask import Flask
-import os
+# Function to run the Flask app
+def run_flask():
+    app.run(host='0.0.0.0', port=4000)
 
-app = Flask(__name__)
-
-# Define a simple route for testing
-@app.route('/')
-def home():
-    return "This is a web service running on Render!"
-
-if __name__ == "__main__":
-    # Render assigns a PORT environment variable for web services
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port)
-    
+if __name__ == '__main__':
+    run_flask()
