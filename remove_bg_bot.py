@@ -3,6 +3,22 @@ import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
+from flask import Flask, render_template
+
+# Initialize Flask app
+app = Flask(__name__, static_folder='flask_app/static', template_folder='flask_app/templates')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Function to run the Flask app
+def run_flask():
+    app.run(host='0.0.0.0', port=4000)
+
+if __name__ == '__main__':
+    run_flask()
+
 # Set up logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO

@@ -1,6 +1,7 @@
 services:
-  - type: worker
-    name: telegram-bot-worker
+  - type: web
+    name: combined-app
     env: python
-    buildCommand: "pip install python-telegram-bot requests"
-    startCommand: "python remove_bg_bot.py"  # Assuming your bot script is called bot.py
+    buildCommand: "pip install -r flask_app/requirements.txt"
+    startCommand: "python3 bot/remove_bg_bot.py"
+    plan: free
